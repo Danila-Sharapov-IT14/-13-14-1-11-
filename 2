@@ -1,4 +1,5 @@
 #include "2.h"
+
 using namespace std;
 
 // Функция для убирания лишних пробелов
@@ -18,25 +19,25 @@ string isDivisibleBy(const string &number, long long divisor) {
             cerr << "Ошибка: Ввод должен содержать только цифры." << endl;
             return "Ошибка";
         }
-        string result; // Результат деления в виде строки
-        long long num = 0;
-
-        for (char c: number) {
-            num = num * 10 + (c - '0'); // Преобразуем символ в цифру и добавляем к числу
-            if (num >= divisor) {
-                result += (num / divisor + '0'); // Добавляем к результату текущую цифру
-                num %= divisor; // Оставляем остаток
-            } else if (!result.empty()) {
-                result += '0'; // Если результат больше 0, добавляем 0 для правильной позиции
-            }
-        }
-
-        // Проверяем делимость
-        if (num == 0) {
-            return result.empty() ? "0" : result; // Возвращаем результат или "0", если результат пустой
-        } else return ""; // Возвращаем пустую строку, если число не делится
     }
+    string result; // Результат деления в виде строки
+    long long num = 0;
+    for (char c: number) {
+        num = num * 10 + (c - '0'); // Преобразуем символ в цифру и добавляем к числу
+        if (num >= divisor) {
+            result += (num / divisor + '0'); // Добавляем к результату текущую цифру
+            num %= divisor; // Оставляем остаток
+        } else if (!result.empty()) {
+            result += '0'; // Если результат больше 0, добавляем 0 для правильной позиции
+        }
+    }
+    // Проверяем делимость
+    if (num == 0) {
+        return result.empty() ? "0" : result; // Возвращаем результат или "0", если результат пустой
+    } else return ""; // Возвращаем пустую строку, если число не делится
+
 }
+
 // Функция для определения, является ли число простым
 bool primeNumbers(unsigned long long num) {
     for (long long i = 2; i * i <= num; ++i) {
@@ -84,3 +85,5 @@ void primeFactorization(string n) {
             cout << ")" << endl;
             break;
         }
+    }
+}
