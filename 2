@@ -1,0 +1,86 @@
+#include "2.h"
+using namespace std;
+
+// Функция для убирания лишних пробелов
+string spaces(string str) {
+    string str2;
+    for (char i: str) {
+        if (i != ' ') str2 += i;
+    }
+    return str2; // Возвращает обновлённую строку
+}
+
+// Функция для проверки делимости и получения результата деления в виде строки
+string isDivisibleBy(const string &number, long long divisor) {
+    // Проверяем, что строка содержит только цифры
+    for (char c: number) {
+        if (!isdigit(c)) {
+            cerr << "Ошибка: Ввод должен содержать только цифры." << endl;
+            return "Ошибка";
+        }
+        string result; // Результат деления в виде строки
+        long long num = 0;
+
+        for (char c: number) {
+            num = num * 10 + (c - '0'); // Преобразуем символ в цифру и добавляем к числу
+            if (num >= divisor) {
+                result += (num / divisor + '0'); // Добавляем к результату текущую цифру
+                num %= divisor; // Оставляем остаток
+            } else if (!result.empty()) {
+                result += '0'; // Если результат больше 0, добавляем 0 для правильной позиции
+            }
+        }
+
+        // Проверяем делимость
+        if (num == 0) {
+            return result.empty() ? "0" : result; // Возвращаем результат или "0", если результат пустой
+        } else return ""; // Возвращаем пустую строку, если число не делится
+    }
+}
+// Функция для определения, является ли число простым
+bool primeNumbers(unsigned long long num) {
+    for (long long i = 2; i * i <= num; ++i) {
+        if (i == 4294967295) return true;
+        if (num % i == 0) {
+            return false; // Число делится на i, значит оно составное
+        }
+    }
+    return true; // Число простое
+}
+
+void primeFactorization(string n) {
+    string factors = " ("; // Итоговая строка с простыми сомножиствами числа
+    int err = 0; // Переменная в случае того, что будут в числе буквы и другие символы
+    string number = n;
+    for (unsigned long long i = 2; i <= 4294967295; i++) {
+        if (i > 10000000) { // Проверка для числа если оно является простым
+            if (size(n) > 19 || n == number || primeNumbers(stoull(n))) {
+                factors += n;
+                n = "1";
+            }
+        }
+        while (true) {
+            if (primeNumbers(i)) { // Проверка, является ли переменная i простым числом
+                string n2 = isDivisibleBy(n, i); // Проверка делимости
+                if (n2 == "Ошибка") { // Проверка на ошибку вводе
+                    err = 1;
+                    break;
+                }
+                // Если n2 не является "", оно является сомножиством числа и добавляется к итоговой строке
+                if (!n2.empty()) {
+                    factors += to_string(i) + ", ";
+                    n = n2;
+                } else break;
+            } else break;
+        }
+        if (err == 1) break; // Если ошибка в воде заканчиваем программу
+        if (n == "1") {
+            // Вывод ответов
+            cout << "Количество символов в числе - " << size(number) << "\n";
+            cout << "Простые сомножители числа " << number << " -";
+            for (int elem = 0; elem < size(factors) - 2; elem++) { // Вывод итоговой строки по элементно
+                cout << factors[elem];
+            }
+            cout << ")" << endl;
+            break;
+        }
