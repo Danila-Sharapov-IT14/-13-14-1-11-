@@ -1,0 +1,17 @@
+#include <string>
+#include "windows.h"
+#include <iostream>
+#include "2.h"
+using namespace std;
+
+int main() { // Основная программа
+    SetConsoleOutputCP(1251);
+    SetConsoleCP(1251);
+    setlocale(LC_ALL, "ru");
+    string input, x;
+    cout << "Привет, эта программа поможет тебе число разложить на простые сомножества" << endl;
+    cout << "Введите число которое хотите разложить на простые сомножители (только цифры!) - "; // Ввод числа
+    getline(cin, input);
+    x = spaces(input); // Убирает лишние пробелы если они есть
+    primeFactorization(x); // Основная функция для вычисления простых сомножиств числа
+}
